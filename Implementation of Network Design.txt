@@ -109,3 +109,4 @@ int fa 0/11
 end
 
 
+set-netfirewallprofile -name public,private,domain -enabled false
