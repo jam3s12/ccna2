@@ -1,3 +1,11 @@
+000a:000c:0000:0000:000:0000:0000:0000 = a:c::
+0000:0000:0000:0000:000:0000:0000:0000 = ::
+fe80:0000:0000:0000:000a:0000:00
+
+
+
+
+
 hostname COREbaba-51
 enable secret pass
 service password-encryption
@@ -8,5 +16,41 @@ password pass
 login
 exec-timeout 0 0
 line vty 0 14
+password pass
 login
 exec-timeout 0 0
+end
+
+to save = copy run start
+
+config t
+sdm prefer dual-ipv4-and-ipv6 routing
+end
+
+!to save
+wr
+
+sh sdm prefer
+
+!!!!!!!!!!!!!!Task 2!!!!!!!!!!!!
+!!!!PC to switch
+config t
+ip routing
+ipv6 unicast-routing
+int vlan 1
+no shut
+ip add 10.51.1.4 255.255.255.0
+ipv6 enable
+no ipv6 address cafe:cafe:cafe:cafe::5151/64
+end
+
+!!!Switch to PC
+config t
+ip routing
+ipv6 unicast-routing
+int vlan 1
+no shut
+ip add 10.51.1.4 255.255.255.0
+ipv6 enable
+ipv6 address cafe:cafe:cafe:cafe::eeee/64
+end
