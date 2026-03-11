@@ -1,0 +1,12 @@
+hostname COREbaba-51
+enable secret pass
+service password-encryption
+no logging console
+no ip domain-lookup
+line console 0
+password pass
+login
+exec-timeout 0 0
+line vty 0 14
+login
+exec-timeout 0 0
