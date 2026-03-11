@@ -54,3 +54,41 @@ ip add 10.51.1.4 255.255.255.0
 ipv6 enable
 ipv6 address cafe:cafe:cafe:cafe::eeee/64
 end
+
+
+!!!!ipv6 dhcp server for data center: /64 + /10
+config t
+int vlan 110
+ipv6 enable
+ipv6 add fafa:fafa:fafa:fafa:0040::1/74
+ipv6 dhcp server 1024OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 1024OFFICE
+ address prefix fafa:fafa:fafa:fafa:0040::/74
+int fa0/5
+ switchport access vlan 110
+end
+
+
+config t
+int vlan 108
+ipv6 enable
+ipv6 add fabe:bebe:fabe:bebe:0040::1/67
+ipv6 dhcp server 8OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 8OFFICE
+ address prefix fabe:bebe:fabe:bebe:0040::/67
+int fa0/5
+ switchport access vlan 108
+int fa0/7
+ switchport access vlan 108
+end
+
+!!!!!!!!!!to clear previes configuration in ipv6
+clear ipv6 dhcp bind *
+
+
