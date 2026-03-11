@@ -203,3 +203,76 @@ P1(config-if)#lldp transmit
 P1(config-if)#int e1/1
 P1(config-if)#lldp receive
 P1(config-if)#lldp transmit
+
+!!!!!!!!!!!R3
+sh alias
+Exec mode aliases:
+  h                     help
+  lo                    logout
+  p                     ping
+  r                     resume
+  s                     show
+  u                     undebug
+  un                    undebug
+  w                     where
+  bp                    show ip int brief | ex una
+  sr                    show ip route
+  cn                    show cdp nei
+  sp                    show ip protocols
+  bp6                   show ipv6 int brief | exc down
+  sr6                   show ipv6 route
+  sbs6                  show bgp ipv6 summ
+  sc                    show run | sec
+
+ATM virtual circuit configuration mode aliases:
+  vbr                   vbr-nrt
+!!!!!!!!Windws!!!!
+route print
+route delete 0.0.0.0
+route add 0.0.0.0 mask 0.0.0.0 192.168.1.1 -p
+
+COREbaba-51#config t
+COREbaba-51(config)#int loopback 69
+COREbaba-51(config-if)#c
+COREbaba-51(config-if)#do ping 69.0.0.1
+
+route add 69.0.0.0 mask 255.0.0.0 10.51.1.4
+route add 88.0.0.0 mask 255.0.0.0 10.51.1.4
+route add 77.0.0.0 mask 255.0.0.0 10.51.1.4
+
+kill the internet on pc
+route delete 0.0.0.0
+route add 4.0.0.0 mask 255.0.0.0 192.168.1.1p
+route add 1.0.0.0 mask 255.0.0.0 192.168.1.1
+ping 1.1.1.1
+
+
+!!!!!!learn to route in cisco
+r4
+config t
+2nd: ip route 10.1.1.4 255.255.255.252 10.1.1.9
+4th: ip route 10.1.1.0 255.255.255.252 10.1.1.9
+
+do traceroute 10.1.1.2
+
+r2 pakilala si 10.1.1.8/30
+3rd: ip route 10.1.1.8 255.255.255.252 10.1.1.6
+
+r3:pakilala si 10.1.1.0
+1st : ip route 10.1.1.0 255.255.255.252 10.1.1.5
+
+r1: pakilala si 10.1.1.4/30 and 10.1.1.8/3
+ip route 10.1.1.4 255.255.255.252 10.1.1.2
+ip route 10.1.1.8 255.255.255.252 10.1.1.2
+_______________________________________________
+Load Balancer
+r1 - have 3 telco = PLDT, GLOBE AND CONVERGE
+failover/floating static routes:
+R1
+config t
+ip route 0.0.0.0 0.0.0.0 209.9.9.3 1
+ip route 0.0.0.0 0.0.0.0 207.7.7.2 2
+ip route 0.0.0.0 0.0.0.0 208.8.8.4 3
+
+
+
