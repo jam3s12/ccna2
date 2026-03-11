@@ -1,0 +1,184 @@
+000a:000c:0000:0000:000:0000:0000:0000 = a:c::
+0000:0000:0000:0000:000:0000:0000:0000 = ::
+fe80:0000:0000:0000:000a:0000:00
+
+
+
+
+
+hostname COREbaba-51
+enable secret pass
+service password-encryption
+no logging console
+no ip domain-lookup
+line console 0
+password pass
+login
+exec-timeout 0 0
+line vty 0 14
+password pass
+login
+exec-timeout 0 0
+end
+
+to save = copy run start
+
+config t
+sdm prefer dual-ipv4-and-ipv6 routing
+end
+
+!to save
+wr
+
+sh sdm prefer
+
+!!!!!!!!!!!!!!Task 2!!!!!!!!!!!!
+!!!!PC to switch
+config t
+ip routing
+ipv6 unicast-routing
+int vlan 1
+no shut
+ip add 10.51.1.4 255.255.255.0
+ipv6 enable
+no ipv6 address cafe:cafe:cafe:cafe::5151/64
+end
+
+!!!Switch to PC
+config t
+ip routing
+ipv6 unicast-routing
+int vlan 1
+no shut
+ip add 10.51.1.4 255.255.255.0
+ipv6 enable
+ipv6 address cafe:cafe:cafe:cafe::eeee/64
+end
+
+
+!!!!ipv6 dhcp server for data center: /64 + /10
+config t
+int vlan 110
+ipv6 enable
+ipv6 add fafa:fafa:fafa:fafa:0040::1/74
+ipv6 dhcp server 1024OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 1024OFFICE
+ address prefix fafa:fafa:fafa:fafa:0040::/74
+int fa0/5
+ switchport access vlan 110
+end
+
+
+config t
+int vlan 108
+ipv6 enable
+ipv6 add fabe:bebe:fabe:bebe:0040::1/67
+ipv6 dhcp server 8OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 8OFFICE
+ address prefix fabe:bebe:fabe:bebe:0040::/67
+int fa0/5
+ switchport access vlan 108
+int fa0/7
+ switchport access vlan 108
+end
+
+!!!!!!!!!!to clear previes configuration in ipv6
+clear ipv6 dhcp bind *
+
+config t
+vlan 108
+name 8OFFICE
+int vlan 108
+ no shutdown
+ ip address 10.32.0.1 255.224.0.0
+ip dhcp excluded-add 10.32.0.1 10.32.0.99
+ip  dhcp pool 8OFFICE
+ network 10.32.0.0 255.224.0.0
+ default-router 10.32.0.1
+ domain-name 8OFFICE
+ dns-server 8.8.8.8
+int fa 0/5
+ switchport access vlan 108
+int fa 0/7
+ switchport access vlan 108
+end
+
+For ultimate IPV4?IPV6 senior SME for ARMY INFRA:
+router,switch,drones,cameras,etc,smartdevices:
+ipv6:  baba:baba:baba::/48
+ipv4:  172.16.0.0/16
+
+subnet to: 512
+convert : 512 = 2r9
+addto/ : /64+9 = /72
+Ipasokmo:
+     8  4  2  1       8  4  2  1      8  4  2  1      8  4  2  1
+vlan512
+ipv6Office:  0000   0080   0100  0180  0200 0280  0300 '0380'
+/48+/9 =/57
+
+172.16.0.0/16
+C: /16= /9 = /25
+A: 25
+ipasok mo 128 sa 4th
+      172.16.0.128/25 - > notyours : 172.16.1.0
+      172.16.0.129 - 172.16.0.255
+
+config t
+vlan 5
+name 512OFFICE
+int vlan 5
+ no shutdown
+ ip address 172.16.0.129 255.255.255.128
+ip dhcp excluded-add 172.16.0.129 172.16.0.139
+ip  dhcp pool 8OFFICE
+ network 172.16.0.128 255.255.255.128
+ default-router 10.32.0.1
+ domain-name 512OFFICE
+ dns-server 8.8.8.8
+int fa0/5
+shut
+no shut
+ switchport access vlan 5
+int fa0/7
+shut
+no shut
+ switchport access vlan 5
+end
+
+config t
+int vlan 5
+ipv6 enable
+ipv6 add baba:baba:baba:0380::1/57
+ipv6 dhcp server 512OFFICE
+ipv6 nd managed-config-flag
+ipv6 nd other-config-flag
+no shut
+ipv6 dhcp pool 512OFFICE
+ address prefix baba:baba:baba:0380::/57
+int fa0/5
+shut
+no shut
+ switchport access vlan 5
+int fa0/7
+shut
+no shut
+ switchport access vlan 5
+end
+
+!!installer for linux
+sh flash: | include 3560
+cd c3560-ipservicesk9-mz.150-2.SE9
+sh flash: | include .bin 
+
+
+Task4: Linux for network engr/admins
+
+rm -rf /etc/udev/rules.d/70-persistent-net.rules
+reboot
